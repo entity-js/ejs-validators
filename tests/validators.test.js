@@ -11,15 +11,14 @@
  *                                      \/_____/ \/_____/
  */
 
-var test = require('unit.js');
+var test = require('unit.js'),
+    EUnknownValidator = require('../lib/errors/EUnknownValidator');
+
+var Validators;
 
 describe('ejs/validators', function () {
 
   'use strict';
-
-  var EUnknownValidator = require('../lib/errors/EUnknownValidator');
-
-  var Validators;
 
   beforeEach(function () {
 
@@ -29,8 +28,11 @@ describe('ejs/validators', function () {
 
   afterEach(function () {
 
-    var name = require.resolve('../lib');
-    delete require.cache[name];
+    global._ejsStatic['ejs-validators'] = {
+      _validators: {}
+    };
+
+    delete require.cache[require.resolve('../lib')];
 
   });
 
